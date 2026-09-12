@@ -1,7 +1,15 @@
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
+
+# Fonts are content-locked: a given face+weight file never changes, only new ones get added.
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Images are NOT immutable: the filenames are stable and the artwork behind them gets
+# replaced (a new brand delivery, a real gameplay capture). "immutable" here once left
+# the apex serving a 17-hour-old logo after a deploy while pages.dev served the new one.
+# An hour of full-speed cache plus a week of serve-stale-while-revalidating keeps it fast
+# without pinning a stale asset for a year.
 /img/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=3600, stale-while-revalidate=604800
