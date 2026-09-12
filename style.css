@@ -1,0 +1,101 @@
+/* Bolide Games — one committed look: white page, dark hero and footer. */
+@font-face { font-family: "Unbounded"; font-weight: 800; font-display: swap; src: url("fonts/unbounded-800.woff2") format("woff2"); }
+@font-face { font-family: "Archivo"; font-weight: 400; font-display: swap; src: url("fonts/archivo-400.woff2") format("woff2"); }
+@font-face { font-family: "Archivo"; font-weight: 500; font-display: swap; src: url("fonts/archivo-500.woff2") format("woff2"); }
+@font-face { font-family: "Archivo"; font-weight: 700; font-display: swap; src: url("fonts/archivo-700.woff2") format("woff2"); }
+
+:root {
+  --red: #a11a1a; --red-dark: #c62828; --black: #111111; --ink: #444444; --muted: #6a6a6a;
+  --hairline: #e2e2e2; --void: #0c0c10; --white: #ffffff; --grey: #8a8a8a;
+  --display: "Unbounded", "Arial Black", "Archivo", Arial, sans-serif;
+  --body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --gutter: 72px; --content: 1296px;
+}
+* { box-sizing: border-box; }
+html { color-scheme: light; }
+body { margin: 0; background: var(--white); color: var(--black); font: 400 16px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--red); text-decoration: none; }
+a:hover, a:focus-visible { color: var(--black); }
+:focus-visible { outline: 3px solid var(--red-dark); outline-offset: 3px; }
+.wrap { width: min(var(--content), 100% - 2 * var(--gutter)); margin-inline: auto; }
+.label { font: 700 13px/1 var(--body); letter-spacing: 0.14em; text-transform: uppercase; }
+
+/* header */
+.site-header { border-bottom: 1px solid var(--hairline); }
+.site-header .wrap { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 28px 24px; }
+.brand img { width: 220px; height: auto; }
+.nav { display: flex; gap: 8px; }
+.nav a { color: var(--black); padding: 10px 18px; font: 700 14px/1 var(--body); letter-spacing: 0.14em; text-transform: uppercase; }
+.nav a:hover, .nav a:focus-visible { color: var(--red); }
+.nav a.contact { color: var(--muted); }
+
+/* hero */
+.hero { background: var(--void); background-image: radial-gradient(ellipse at 50% 110%, rgba(198,40,40,0.35) 0%, rgba(12,12,16,0) 55%), linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px); background-size: 100% 100%, 48px 48px, 48px 48px; color: var(--white); text-align: center; }
+.hero .wrap { display: flex; flex-direction: column; align-items: center; gap: 30px; padding-block: 128px 120px; }
+.hero h1 { margin: 0; }
+.hero h1 img { width: 760px; filter: drop-shadow(0 0 28px rgba(36,227,255,0.35)); }
+.hero p { margin: 0; max-width: 860px; font: 500 30px/1.3 var(--body); text-wrap: balance; }
+.badge { display: flex; align-items: center; gap: 18px; font: 800 13px/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase; }
+.badge::before, .badge::after { content: ""; width: 40px; height: 3px; background: var(--red-dark); }
+
+/* sections */
+.section .wrap { padding-block: 104px 0; }
+.h-display { margin: 0; font: 800 38px/1 var(--display); letter-spacing: -0.04em; color: var(--black); }
+.games-h { position: relative; width: 240px; height: 60px; margin-bottom: 36px; }
+.games-h .h-display { position: absolute; left: 0; top: 0; }
+.games-h svg { position: absolute; left: -8px; top: 44px; width: 200px; height: 20px; overflow: visible; }
+.game { display: grid; grid-template-columns: 4fr 5fr 2fr 1fr; gap: 32px; align-items: center; padding-block: 32px; border-top: 3px solid var(--black); border-bottom: 1px solid var(--hairline); }
+.game + .game { border-top: 0; }
+.game .shot { background: var(--void); aspect-ratio: 16 / 9; }
+.game .shot img { width: 100%; height: 100%; object-fit: cover; }
+.game h3 { margin: 0 0 12px; font: 800 24px/1.1 var(--display); letter-spacing: -0.03em; }
+.game p { margin: 0; color: var(--ink); text-wrap: pretty; }
+.game .meta { display: flex; flex-direction: column; gap: 8px; }
+.game .meta .platform { color: var(--muted); }
+.game .meta .status { color: var(--red); }
+.about .wrap { padding-block: 104px 0; }
+.about p { max-width: 65ch; margin: 24px 0 0; font-size: 18px; color: var(--ink); }
+
+/* footer */
+.site-footer { margin-top: 160px; background: var(--black); color: var(--grey); font: 500 13px/1.5 var(--body); letter-spacing: 0.04em; }
+.site-footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 40px; }
+.site-footer .left { display: flex; align-items: center; gap: 20px; }
+.site-footer .left img { width: 160px; height: auto; }
+.site-footer .right { display: flex; gap: 32px; }
+.site-footer a { color: var(--grey); }
+.site-footer a:hover, .site-footer a:focus-visible { color: var(--white); }
+
+/* privacy */
+.prose .wrap { padding-block: 72px 0; }
+.prose h1 { margin: 0 0 8px; font: 800 38px/1.05 var(--display); letter-spacing: -0.04em; }
+.prose .updated { margin: 0 0 40px; color: var(--muted); }
+.prose article { max-width: 65ch; }
+.prose h2 { margin: 40px 0 12px; font: 800 20px/1.2 var(--display); letter-spacing: -0.02em; }
+.prose p { margin: 0 0 16px; color: var(--ink); font-size: 17px; }
+
+/* phone */
+@media (max-width: 900px) {
+  :root { --gutter: 20px; }
+  .site-header .wrap { padding-block: 18px 16px; }
+  .brand img { width: 156px; }
+  .nav { gap: 4px; }
+  .nav a { padding: 12px 10px; font-size: 12px; letter-spacing: 0.12em; }
+  .hero .wrap { gap: 20px; padding-block: 56px 52px; }
+  .hero h1 img { width: 330px; filter: drop-shadow(0 0 20px rgba(36,227,255,0.35)); }
+  .hero p { font-size: 20px; line-height: 1.35; }
+  .badge { gap: 12px; font-size: 11px; }
+  .badge::before, .badge::after { width: 28px; }
+  .section .wrap, .about .wrap { padding-block: 48px 0; }
+  .h-display { font-size: 30px; }
+  .games-h { width: 180px; height: 48px; margin-bottom: 20px; }
+  .games-h svg { left: -6px; top: 34px; width: 160px; height: 16px; }
+  .game { grid-template-columns: 1fr; gap: 16px; padding-block: 20px 24px; }
+  .game h3 { font-size: 20px; }
+  .game .meta { flex-direction: row; justify-content: space-between; }
+  .about p { font-size: 16px; }
+  .site-footer { margin-top: 72px; }
+  .site-footer .wrap { flex-direction: column; align-items: flex-start; gap: 14px; padding-block: 32px; }
+  .site-footer .right { gap: 20px; }
+}
+@media (max-width: 380px) { .nav a { padding: 12px 6px; } }
