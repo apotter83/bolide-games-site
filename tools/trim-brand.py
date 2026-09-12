@@ -19,7 +19,7 @@ The folder case varies between deliveries (icon / Icon), so the lookup is
 case-insensitive.
 
 Requires Google Chrome and Pillow."""
-import re, sys, os, subprocess, tempfile
+import re, sys, os, shutil, subprocess, tempfile
 from PIL import Image
 
 src = sys.argv[1] if len(sys.argv) > 1 else "/home/andrew/bolide_games/logo_files/files"
@@ -118,3 +118,26 @@ for name, rel in FILES.items():
     open(os.path.join("img", name + ".svg"), "w").write(s.strip() + "\n")
     aspect = (x1 - x0) / (y1 - y0)
     print("%-16s viewBox=%-34s aspect=%.4f  <- %s" % (name, vb, aspect, rel))
+
+# Derived assets. These used to be hand-copied after a re-trim, which is exactly how the
+# favicon silently stayed on the previous delivery's crop while every other mark moved on.
+shutil.copyfile(os.path.join("img", "meteor-red.svg"), os.path.join("img", "favicon.svg"))
+print("%-16s <- img/meteor-red.svg" % "favicon.svg")
+
+with tempfile.TemporaryDirectory() as td:
+    page = os.path.join(td, "p.html")
+    open(page, "w").write('<style>html,body{margin:0;background:transparent}'
+                          'img{display:block;width:180px;height:180px}</style>'
+                          '<img src="%s">' % os.path.abspath("img/app-icon-red.svg"))
+    out = os.path.join(td, "i.png")
+    subprocess.run(["google-chrome", "--headless=new", "--disable-gpu", "--hide-scrollbars",
+                    "--default-background-color=00000000", "--window-size=180,180",
+                    "--virtual-time-budget=4000", "--screenshot=" + out, "file://" + page],
+                   capture_output=True)
+    if not os.path.exists(out):
+        raise SystemExit("apple-touch-icon render failed")
+    shutil.copyfile(out, os.path.join("img", "apple-touch-icon.png"))
+print("%-16s <- img/app-icon-red.svg (180x180)" % "apple-touch-icon.png")
+
+# img/og.png is NOT derived here: it composes the lockup with the Dodgeball VR title art
+# and a line of type, so it is rebuilt by hand when the brand or that art changes.
