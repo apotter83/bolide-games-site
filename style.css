@@ -45,10 +45,15 @@ a:hover, a:focus-visible { color: var(--black); }
 .games-h { position: relative; width: 240px; height: 60px; margin-bottom: 36px; }
 .games-h .h-display { position: absolute; left: 0; top: 0; }
 .games-h svg { position: absolute; left: -8px; top: 44px; width: 200px; height: 20px; overflow: visible; }
-.game { display: grid; grid-template-columns: 4fr 5fr 2fr 1fr; gap: 32px; align-items: center; padding-block: 32px; border-top: 3px solid var(--black); border-bottom: 1px solid var(--hairline); }
+/* Two screenshots side by side across the top, the facts on one line underneath:
+   at this content width a shot inside a 4-column cell is ~380px, too small to read
+   a scoreboard or a fighter's name. */
+.game { padding-block: 32px; border-top: 3px solid var(--black); border-bottom: 1px solid var(--hairline); }
 .game + .game { border-top: 0; }
+.game .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
 .game .shot { background: var(--void); aspect-ratio: 16 / 9; }
 .game .shot img { width: 100%; height: 100%; object-fit: cover; }
+.game .facts { display: grid; grid-template-columns: 9fr 2fr 1fr; gap: 32px; align-items: baseline; }
 .game h3 { margin: 0 0 12px; font: 800 24px/1.1 var(--display); letter-spacing: -0.03em; }
 .game p { margin: 0; color: var(--ink); text-wrap: pretty; }
 .game .meta { display: flex; flex-direction: column; gap: 8px; }
@@ -90,7 +95,9 @@ a:hover, a:focus-visible { color: var(--black); }
   .h-display { font-size: 30px; }
   .games-h { width: 180px; height: 48px; margin-bottom: 20px; }
   .games-h svg { left: -6px; top: 34px; width: 160px; height: 16px; }
-  .game { grid-template-columns: 1fr; gap: 16px; padding-block: 20px 24px; }
+  .game { padding-block: 20px 24px; }
+  .game .shots { grid-template-columns: 1fr; gap: 12px; margin-bottom: 16px; }
+  .game .facts { grid-template-columns: 1fr; gap: 12px; }
   .game h3 { font-size: 20px; }
   .game .meta { flex-direction: row; justify-content: space-between; }
   .about p { font-size: 16px; }

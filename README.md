@@ -3,7 +3,7 @@
 Static site for Bolide Games. Two pages, one stylesheet, no build step. Cloudflare Pages deploys `main`.
 
 - **Add a game:** copy the `<article class="game">` block in `index.html`; put a 16:9 capture in `img/` at 1600 and 800 wide (webp).
-- **Swap the Dodgeball VR image:** replace `img/dodgeball-vr-menu-1600.webp` and `-800.webp` (16:9).
+- **Swap a Dodgeball VR screenshot:** replace `img/dodgeball-vr-match-*.webp` (the action shot) or `img/dodgeball-vr-menu-*.webp` (the VS screen), each at 1600 and 800 wide, 16:9. Quest captures are 3840x2160, already 16:9, so they only need resizing. Update the `alt` text to describe the new shot.
 - **New brand finals:** `python3 tools/trim-brand.py "/path/to/logo_files/files"` rewrites `img/*.svg` from the designer's artboards (any size), plus `favicon.svg` and `apple-touch-icon.png`. The originals are never edited. Measuring is done by Chrome, not ImageMagick, which renders these files wrong. `img/og.png` is composed by hand and is the one asset the script does not rebuild.
 - **After replacing an image:** purge it at Cloudflare (zone → Caching → Configuration → Custom Purge → URL). Filenames are stable, so the edge can otherwise keep serving the old bytes.
 - **Fonts:** self-hosted (SIL OFL); `tools/fetch-fonts.sh` re-pulls them.
