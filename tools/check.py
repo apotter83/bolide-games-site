@@ -56,8 +56,16 @@ for name, want in EXPECT_ASPECT.items():
             errors.append(f"{path}: full-artboard rect still present (the ground, not the mark)")
 
 for f in ("img/favicon.svg", "img/apple-touch-icon.png", "img/og.png", "img/dodgeball-vr-logo.webp",
-          "img/dodgeball-vr-menu-1600.webp", "img/dodgeball-vr-menu-800.webp"):
+          "img/dodgeball-vr-menu-1600.webp", "img/dodgeball-vr-menu-800.webp",
+          "img/dodgeball-vr-trailer-poster.webp", "video/dodgeball-vr-trailer-v17.mp4"):
     if not os.path.exists(f): errors.append(f"missing {f}")
+
+# Cloudflare Pages refuses any single file over 25 MiB (the raw 1080p60 trailer was 30 MB).
+for d, _, fs in os.walk("."):
+    if ".git" in d: continue
+    for n in fs:
+        p = os.path.join(d, n)
+        if os.path.getsize(p) > 25 * 1024 * 1024: errors.append(f"{p}: {os.path.getsize(p)/2**20:.1f} MiB, over Pages' 25 MiB file limit")
 
 if os.path.exists("index.html"):
     idx = page("index.html")
@@ -65,7 +73,7 @@ if os.path.exists("index.html"):
         if i not in idx.ids: errors.append(f"index.html: no id={i}")
     if "/privacy" not in idx.links: errors.append("index.html: footer does not link /privacy")
     if "mailto:support@bolide.games" not in idx.links: errors.append("index.html: no contact mailto")
-    for bad in ("trailer", "store", "youtube", "discord", "twitter"):
+    for bad in ("store", "youtube", "discord", "twitter"):
         if re.search(bad, open("index.html").read(), re.I): errors.append(f"index.html: mentions '{bad}' (nothing may point at what does not exist)")
 if os.path.exists("privacy.html"):
     pv = page("privacy.html")
