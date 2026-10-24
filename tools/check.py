@@ -57,7 +57,7 @@ for name, want in EXPECT_ASPECT.items():
 
 for f in ("img/favicon.svg", "img/apple-touch-icon.png", "img/og.png", "img/dodgeball-vr-logo.webp",
           "img/dodgeball-vr-menu-1600.webp", "img/dodgeball-vr-menu-800.webp",
-          "img/dodgeball-vr-trailer-poster.webp", "video/dodgeball-vr-trailer-v20.mp4"):
+          "img/dodgeball-vr-trailer-poster.webp", "video/dodgeball-vr-trailer-v21.mp4"):
     if not os.path.exists(f): errors.append(f"missing {f}")
 
 # Cloudflare Pages refuses any single file over 25 MiB (the raw 1080p60 trailer was 30 MB).
