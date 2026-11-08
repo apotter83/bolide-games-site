@@ -17,6 +17,7 @@ EXPECT_ASPECT = {
 ASPECT_TOL = 0.06        # 6%: covers antialiasing and a designer's minor redraw, not an untrimmed box
 
 errors = []
+OWN_LINKS = ("https://www.youtube.com/@bolidegames", "https://www.youtube.com/watch?v=6ovTwBm0Qi8")
 
 class P(HTMLParser):
     def __init__(s): super().__init__(); s.ids=set(); s.title=False; s.lang=None; s.links=[]
@@ -30,7 +31,10 @@ class P(HTMLParser):
                 if k not in a: errors.append(f"{s.f}: <img src={a.get('src')}> missing {k}")
         for k in ("src", "href"):
             v = a.get(k)
-            if v and re.match(r"https?://", v): errors.append(f"{s.f}: external {k}={v}")
+            # nothing is ever LOADED from a third party (the privacy page promises it); plain
+            # <a> links out are allowed only to the places we own, listed here
+            if v and re.match(r"https?://", v) and not (tag == "a" and k == "href" and v.startswith(OWN_LINKS)):
+                errors.append(f"{s.f}: external {k}={v}")
             if v: s.links.append(v)
 
 def page(f):
@@ -73,7 +77,7 @@ if os.path.exists("index.html"):
         if i not in idx.ids: errors.append(f"index.html: no id={i}")
     if "/privacy" not in idx.links: errors.append("index.html: footer does not link /privacy")
     if "mailto:support@bolide.games" not in idx.links: errors.append("index.html: no contact mailto")
-    for bad in ("store", "youtube", "discord", "twitter"):
+    for bad in ("store", "discord", "twitter"):
         if re.search(bad, open("index.html").read(), re.I): errors.append(f"index.html: mentions '{bad}' (nothing may point at what does not exist)")
 if os.path.exists("privacy.html"):
     pv = page("privacy.html")
